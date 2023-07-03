@@ -1,0 +1,38 @@
+.centered-content {
+    margin-left: auto;
+    margin-right: auto;
+    min-height: calc(100vh - var(--header-height) - var(--header-margin) - var(--footer-height) - var(--footer-margin));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-data {
+    width: 800px;
+    text-align: center;
+}
+
+.post-data p:first-child {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    color: var(--color-light);
+}
+
+.post-data p:last-child {
+    font-size: var(--font-size-default);
+    margin-top: 2rem;
+    color: var(--color-light);
+}
+
+.management-buttons {
+    margin-top: 2rem;
+    width: 350px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.management-buttons ::deep button {
+    width: 150px;
+}

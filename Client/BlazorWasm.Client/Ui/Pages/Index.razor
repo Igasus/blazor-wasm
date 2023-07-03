@@ -1,0 +1,27 @@
+﻿@page "/"
+
+@inject NavigationManager NavigationManager
+
+<PageTitle>Home</PageTitle>
+
+<div class="container">
+    <div class="centered-content">
+        <div class="project-summary">
+            <p>Template Blazor Application</p>
+            <p>This application is template Blazor WebAssembly project.<br/>
+                It uses both HTTP and SignalR (WebSockets) for transfering data.<br/>
+                Created by Igasus</p>
+        </div>
+    
+        <div class="navigation-buttons">
+            <Button Type="@ButtonType.Circled" OnClick="@(_ => NavigateTo("posts"))">Posts / HTTP</Button>
+            <Button Type="@ButtonType.CircledInverted" OnClick="@(_ => NavigateTo("chat"))">Chat / SignalR</Button>
+        </div>
+    </div>
+    
+    <img class="home-screen-image" src="images/home-screen-image.jpg" alt="home-screen-image"/>
+</div>
+
+@code {
+    private void NavigateTo(string uri) => NavigationManager.NavigateTo(uri);
+}

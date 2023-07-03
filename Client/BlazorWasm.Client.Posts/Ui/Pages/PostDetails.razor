@@ -1,0 +1,64 @@
+@page "/posts/{PostId:int}"
+
+@using BlazorWasm.Client.Posts.Services.Contracts
+@using BlazorWasm.Shared.Models
+
+@inject IPostService PostService
+@inject NavigationManager NavigationManager;
+
+<PageTitle>@(_post is null ? "Post" : _post.Title)</PageTitle>
+
+@if (_post is not null)
+{
+     <div class="centered-content">
+         <div class="post-data">
+             <p>@_post.Title</p>
+             <p>@ConvertNewLineMarkup(_post.Body)</p>
+         </div>
+
+         <div class="management-buttons">
+             <Button Type="@ButtonType.Circled" OnClick="OnEditClick">Edit</Button>
+             <Button Type="@ButtonType.CircledInverted" OnClick="OnDeleteClick">Delete</Button>
+         </div>
+     </div>
+}
+else
+{
+    <h1>Post is not loaded yet...</h1>
+}
+
+<PostEditorDialog @ref="_postEditorDialog" OnAfterSave="OnAfterEdited" />
+
+@code {
+    private PostDto _post;
+    private PostEditorDialog _postEditorDialog;
+    
+    [Parameter]
+    public int PostId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _post = await PostService.GetByIdAsync(PostId);
+        await base.OnInitializedAsync();
+    }
+
+    private void OnEditClick()
+    {
+        _postEditorDialog.OpenEdit(_post);
+        Console.WriteLine("clicked");
+    }
+
+    private async void OnDeleteClick()
+    {
+        await PostService.DeleteByIdAsync(PostId);
+        NavigationManager.NavigateTo("posts");
+    }
+
+    private void OnAfterEdited()
+    {
+        StateHasChanged();
+    }
+
+    private MarkupString ConvertNewLineMarkup(string input) =>
+        (MarkupString)input.Replace(Environment.NewLine, "<br />");
+}

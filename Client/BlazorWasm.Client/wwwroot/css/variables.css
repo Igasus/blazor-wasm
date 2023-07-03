@@ -1,0 +1,24 @@
+* {
+    --color-primary: #41644A;
+    --color-secondary: #E86A33;
+    --color-light: #F2E3DB;
+    --color-dark: #263A29;
+
+    --font-size-xxl: 5rem;
+    --font-size-extra-large: 3rem;
+    --font-size-large: 2rem;
+    --font-size-default: 1rem;
+    --font-size-small: 0.8rem;
+    --font-size-extra-small: 0.6rem;
+    
+    --transition-primary: all 0.2s ease-in-out;
+    
+    --header-height: 60px;
+    --header-margin: 4rem;
+    --footer-height: 100px;
+    --footer-margin: 6rem;
+    
+    --box-shadow-offset-x: 3px;
+    --box-shadow-offset-y: 3px;
+    --box-shadow-primary: var(--box-shadow-offset-x) var(--box-shadow-offset-y) 10px 0px rgba(0,0,0,0.5);
+}

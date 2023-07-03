@@ -1,0 +1,22 @@
+<button @onclick="OnClickEvent" class="@ButtonClasses.FromType(Type)">
+    @ChildContent
+</button>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public ButtonType Type { get; set; } = ButtonType.Default;
+
+    private async void OnClickEvent(MouseEventArgs args)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(args);
+        }
+    }
+}

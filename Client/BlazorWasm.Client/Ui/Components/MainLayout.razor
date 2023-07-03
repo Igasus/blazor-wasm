@@ -1,0 +1,31 @@
+﻿@inherits LayoutComponentBase
+
+@inject NavigationManager NavigationManager
+
+<div class="page">
+    <header>
+        <div>
+            <Button Type="@ButtonType.Default" OnClick="@(_ => NavigateTo("/"))">Home</Button>
+        </div>
+        <div>
+            <Button Type="@ButtonType.Default" OnClick="@(_ => NavigateTo("posts"))">Posts</Button>
+            <Button Type="@ButtonType.Default" OnClick="@(_ => NavigateTo("chat"))">Chat</Button>
+        </div>
+        <div>
+            <Button Type="@ButtonType.Default" OnClick="@(_ => NavigateTo("/"))">Login</Button>
+            <Button Type="@ButtonType.Circled" OnClick="@(_ => NavigateTo("/"))">Register</Button>
+        </div>
+    </header>
+
+    <main>
+        @Body
+    </main>
+    
+    <footer>
+        <p>Developed by Ihor Hubskyi AKA Igasus.</p>
+    </footer>
+</div>
+
+@code {
+    private void NavigateTo(string uri) => NavigationManager.NavigateTo(uri);
+}

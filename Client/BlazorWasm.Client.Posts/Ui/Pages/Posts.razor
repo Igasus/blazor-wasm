@@ -1,0 +1,51 @@
+@page "/posts"
+
+@using BlazorWasm.Shared.Models
+@using BlazorWasm.Client.Posts.Services.Contracts
+
+@inject IPostService PostService
+@inject NavigationManager NavigationManager;
+
+<PageTitle>Posts</PageTitle>
+
+<div class="container">
+    <text class="title">Posts</text>
+    
+    <Button Type="@ButtonType.Circled" OnClick="OnCreateClick">Create new Post</Button>
+    
+    <div class="posts-list">
+        @foreach (var post in _posts)
+        {
+            <PostCard Post="@post" OnClick="@(_ => OpenPostDetails(post.Id))" />
+        }
+    </div>
+</div>
+
+<PostEditorDialog @ref="_postEditorDialog" OnAfterSave="OnAfterSave" />
+
+@code {
+    private IList<PostDto> _posts = new List<PostDto>();
+    private PostEditorDialog _postEditorDialog;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _posts = await PostService.GetAllAsync();
+        await base.OnInitializedAsync();
+    }
+
+    private void OpenPostDetails(int postId)
+    {
+        NavigationManager.NavigateTo($"posts/{postId}");
+    }
+
+    private void OnCreateClick()
+    {
+        _postEditorDialog.OpenCreate();
+    }
+
+    private void OnAfterSave(PostDto post)
+    {
+        _posts.Add(post);
+        StateHasChanged();
+    }
+}

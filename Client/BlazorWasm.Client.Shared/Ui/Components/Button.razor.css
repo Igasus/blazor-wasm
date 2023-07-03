@@ -1,0 +1,59 @@
+/* Default Button */
+
+.button-default {
+    font-size: var(--font-size-default);
+    color: var(--color-light);
+    text-decoration: none;
+    position: relative;
+    margin: 1rem;
+    background: none;
+    border: none;
+}
+
+.button-default:hover {
+    color: var(--color-light);
+}
+
+.button-default::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-light);
+    transition: var(--transition-primary);
+}
+
+.button-default:hover::after {
+    width: 100%;
+}
+
+/* Circled, Circled-Inverted Buttons */
+
+.button-circled, .button-circled-inverted {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: var(--font-size-default);
+    font-weight: bold;
+    border: solid 2px var(--color-secondary);
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    transition: var(--transition-primary);
+    color: var(--color-light);
+}
+
+.button-circled {
+    background-color: var(--color-secondary);
+}
+
+.button-circled-inverted {
+    background: none;
+}
+
+.button-circled:hover, .button-circled-inverted:hover {
+    border-color: var(--color-dark);
+    background-color: var(--color-dark);
+}

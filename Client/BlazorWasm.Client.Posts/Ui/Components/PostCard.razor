@@ -1,0 +1,22 @@
+@using BlazorWasm.Shared.Models
+
+<div class="container" @onclick="@(OnClickEvent)">
+    <p class="post-title">@Post.Title</p>
+    <p class="post-body">@Post.Body</p>
+</div>
+
+@code {
+    [Parameter]
+    public PostDto Post { get; set; }
+    
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private async void OnClickEvent(MouseEventArgs args)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(args);
+        }
+    }
+}

@@ -1,0 +1,68 @@
+@using BlazorWasm.Shared.Models
+@using BlazorWasm.Client.Posts.Services.Contracts
+
+@inject IPostService PostService
+
+<div class="post-editor @(_isOpened ? "" : "post-editor-closed")">
+    <div>
+        <label for="post-title">Title</label>
+        <input id="post-title" type="text" placeholder="Post title..."
+               @bind="_post.Title"/>
+    </div>
+
+    <div>
+        <label for="post-body">Body</label>
+        <textarea id="post-body" placeholder="Post body..."
+                  @bind="_post.Body">
+        </textarea>
+    </div>
+
+    <button @onclick="OnSaveClick">Save</button>
+</div>
+
+@code {
+    private bool _isCreate;
+    private PostDto _post = new();
+    private bool _isOpened;
+    
+    [Parameter]
+    public EventCallback<PostDto> OnAfterSave { get; set; }
+
+    public void OpenCreate()
+    {
+        _isCreate = true;
+        _post = new PostDto();
+        _isOpened = true;
+        StateHasChanged();
+    }
+
+    public void OpenEdit(PostDto post)
+    {
+        _isCreate = false;
+        _post = post;
+        _isOpened = true;
+        StateHasChanged();
+    }
+
+    private async void OnSaveClick()
+    {
+        PostDto savedPost;
+        
+        if (_isCreate)
+        {
+            savedPost = await PostService.CreateAsync(_post);
+        }
+        else
+        {
+            savedPost = await PostService.UpdateAsync(_post.Id, _post);
+        }
+
+        _isOpened = false;
+        StateHasChanged();
+
+        if (OnAfterSave.HasDelegate)
+        {
+            await OnAfterSave.InvokeAsync(savedPost);
+        }
+    }
+}
